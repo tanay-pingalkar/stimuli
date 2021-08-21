@@ -17,13 +17,13 @@ export class Var<T> {
       ) as Variable;
       if (what_to_change.child) {
         for (const child of what_to_change.child) {
-          console.log(e.childNodes, child);
+      
           e.childNodes[parseInt(child)].textContent = this.value as unknown as string;
         }
       }
       if (what_to_change.attr) {
         for (const attr of what_to_change.attr) {
-          console.log(attr);
+        
           e.setAttribute(attr, this.value as unknown as string);
         }
       }

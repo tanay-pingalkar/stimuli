@@ -1,6 +1,14 @@
 /** @jsx E **/
-import { E, Var, Mount } from "../../lib/main";
+import { E, Var, Mount, Component } from "../../lib/main";
 
+const Button: Component<{prop:string}> = ({prop}, children) => {
+  return (
+  <div>
+    <h1>{prop}</h1>
+    {children}
+  </div>
+  )
+}
 
 
 const App = () => {
@@ -25,10 +33,12 @@ const App = () => {
           -
         </button>
         <br />
-        <input oninput={(e)=> input.set(e.target.value)}/>
+        <input oninput={(e:any)=> input.set(e.target.value)}/>
         <h1>{input}</h1>
+        <Button prop="this is a prop"><h1>i am a children</h1></Button>
       </div>
     );
 }
 
-Mount(App, document.getElementById("app") as HTMLElement);
+
+Mount(App, document.getElementById("app")!);

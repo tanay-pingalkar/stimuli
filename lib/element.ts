@@ -15,9 +15,20 @@ export interface Variable {
 export const E = (
   name: string,
   props: Record<string, Var<any> | Function | string>,
-  ...children: Array<string | ET>
+  ...children: Array<string | ET |((props:object)=>ET) >
 ): ET => {
   const vars: Record<string, Variable> = {};
+  try {
+    const fn = eval(name);
+    if ( fn instanceof Function ) {
+      const output = fn(props, ...children)  as ET;
+    
+      name = "span"
+      children = [output];
+    }
+  }
+  catch {}
+
 
   for (const prop in props) {
     if (props[prop] instanceof Var) {
@@ -46,14 +57,16 @@ export const E = (
       } else {
         vars[_var.id].child = [child];
       }
+      
       children[child] = _var.value;
     }
+    
   }
 
   return {
     name: name,
     props: props,
     vars: vars,
-    children: children,
+    children: children as (string | ET)[],
   };
 };
