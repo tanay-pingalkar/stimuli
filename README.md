@@ -10,8 +10,7 @@ import { E, Var, Mount } from "../../lib/main";
 
 const App = () => {
   const counter = new Var(0);
-  const input = new Var("");
-  
+
   return (
       <div>
         <button
