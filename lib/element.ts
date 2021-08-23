@@ -1,3 +1,4 @@
+import { ListMap } from "./main";
 import { Var } from "./var";
 
 export interface ET {
@@ -10,7 +11,9 @@ export interface ET {
 export interface Variable {
   child?: Array<string>;
   attr?: Array<string>;
+  implementation?:number;
 }
+
 
 export const E = (
   name: string,
@@ -60,6 +63,31 @@ export const E = (
       
       children[child] = _var.value;
     }
+    else if (children[child] instanceof ListMap){
+      const list = children[child] as unknown as ListMap;
+
+      // if (!vars[list.id]) {
+      //   vars[list.id] = {};
+      // }
+
+      // if (vars[list.id].child) {
+      //   vars[list.id].child?.push(child);
+      // } else {
+      //   vars[list.id].child = [child];
+      // }
+      // vars[list.id].implementation = list.implementationId
+      let _var:Record<string, Variable> = {};
+
+      _var[list.id]={ implementation : list.implementationId };
+   
+      children[child] ={
+        name : "span",
+        children : list.value,
+        vars : _var,
+        props:{}
+      }
+    
+    }
     
   }
 
@@ -67,6 +95,7 @@ export const E = (
     name: name,
     props: props,
     vars: vars,
+
     children: children as (string | ET)[],
   };
 };

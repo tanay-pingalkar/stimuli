@@ -29,7 +29,7 @@ const sub_mount = <T>(to_render: ET, obj: Component<T>) => {
   for (const prop in to_render.vars) {
     element.setAttribute(prop, JSON.stringify(to_render.vars[prop]));
   }
- 
+  console.log(to_render.children);
   for (const child of to_render.children) {
     if (typeof child == "object") {
       element.appendChild(sub_mount(child, obj));

@@ -8,6 +8,8 @@ declare namespace JSX {
     input:any;
     br:any;
     section:any;
+    li:any;
+    p:any
   }
 
 }

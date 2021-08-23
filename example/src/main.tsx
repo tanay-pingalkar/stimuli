@@ -1,5 +1,5 @@
 /** @jsx E **/
-import { E, Var, Mount, Component } from "../../lib/main";
+import { E, Var, Mount, Component, List } from "../../lib/main";
 
 const Button: Component<{prop:string}> = ({prop}, children) => {
   return (
@@ -14,6 +14,8 @@ const Button: Component<{prop:string}> = ({prop}, children) => {
 const App = () => {
   const counter = new Var(0);
   const input = new Var("");
+
+  const todo = new List<string>([]);
   
   return (
       <div>
@@ -33,9 +35,19 @@ const App = () => {
           -
         </button>
         <br />
-        <input oninput={(e:any)=> input.set(e.target.value)}/>
-        <h1>{input}</h1>
+      
+        
         <Button prop="this is a prop"><h1>i am a children</h1></Button>
+        <input oninput={(e:any)=> input.set(e.target.value)}/>
+        <button onclick={()=>{
+          todo.push(input.value);
+          input.set("");
+        }}>add todo</button>
+        <h1>{input}</h1>
+        <h1>todo list</h1>
+        <div>
+          {todo.map((value)=><li>{value}</li>)}
+        </div>
       </div>
     );
 }
